@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pokedex/<int:nb>', include('pokedex.urls'))
+    path('pokedex/', include('pokedex.urls')),
 ]
