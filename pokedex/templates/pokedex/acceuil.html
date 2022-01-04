@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    {% for i in data %}
+        <div style="display: inline-block; margin-left: 4%; margin-bottom: 2%; background: #efe7e7">
+            <a href="{% url 'index' i.id %}" style="text-decoration: none">
+                <img src="{{ i.sprite }}">
+                <p style="text-align: center;">
+                    {{ i.id }}
+                    {{ i.name }}
+                </p>
+            </a>
+        </div>
+    {% endfor %}
+
+    <a href="{% url 'acceuil' limit=20 %}"> Suivant </a>
+    <a href="{% url 'acceuil' %}"> Précédent </a>
+</div>
+</body>
+</html>
