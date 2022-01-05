@@ -1,7 +1,10 @@
+from django.http.response import HttpResponseRedirect
 import requests
 import json
 import logging
 from django.shortcuts import render
+from .forms import PokemonForm
+
 
 
 def index(request, nb):
@@ -17,9 +20,8 @@ def index(request, nb):
     pokemon = response.text
     parse_json = json.loads(pokemon)
     name = parse_json["names"][4]["name"]
-
+    
     return render(request, 'pokedex/index.html', {'name': name, 'sprite': spriteUrl})
-
 
 def pageAcceuil(request, offset=0, limit=30):
     urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
@@ -39,3 +41,18 @@ def pageAcceuil(request, offset=0, limit=30):
         data.append({"id": i + offset + 1, "name": name, "sprite": spriteUrl})
 
     return render(request, 'pokedex/acceuil.html', {'data': data})
+    
+def src_pokemon(request):    
+    if request.method == 'POST':
+        form = PokemonForm(request.POST)
+        if form.is_valid():
+            url = "https://pokeapi.co/api/v2/pokemon/" + str(form.data.get('pokemon'))
+            response = requests.get(url)
+            pokemon = response.text
+            parse_json = json.loads(pokemon)
+            id = parse_json["id"]
+            logging.info(id)
+            return HttpResponseRedirect(str(id))
+    else:
+        form = PokemonForm()
+ 
