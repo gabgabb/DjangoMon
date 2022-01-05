@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, sans-serif;
+}
+
+#barreRecherche {
+    margin: 2% auto;
+    width: 20%;
+    display: flex;
+    align-items: baseline;
+}
+
+#barreRecherche > input {
+    margin: 0 2% 0;
+}
+
+#cardPokemon {
+    display: inline-block;
+    margin-left: 4%;
+    margin-bottom: 2%;
+    background: #d7d6d6;
+    border-radius: 20px;
+}
+
+#lienPokemon {
+    text-decoration: none;
+}
+
+#infoPokemon {
+    text-align: center;
+}
+
+#lienPage {
+    text-align: center;
+}
+

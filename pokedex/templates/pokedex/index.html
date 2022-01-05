@@ -2,16 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ name }}</title>
+    {% include "pokedex/header.html" %}
 </head>
 <body>
-
-    <form action="src_pokemon" method="post">
-        {% csrf_token %}
-        <label for="pokemon">Recherche </label>
-        <input id="pokemon" type="text" name="pokemon">
-        <button type="submit">OK</button>
-    </form>
     <p> {{ name }}</p>
     <img src="{{ sprite }}" alt="img" style="width: 400px; height: 400px">
 </body>

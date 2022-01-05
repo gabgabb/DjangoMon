@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Acceuil</title>
+    {% include "pokedex/header.html" %}
 </head>
+
+<header>
+
+</header>
 <body>
 <div>
     {% for i in data %}
-        <div style="display: inline-block; margin-left: 4%; margin-bottom: 2%; background: #d7d6d6; border-radius: 20px;">
-            <a href="{% url 'index' i.id %}" style="text-decoration: none">
+        <div id="cardPokemon">
+            <a id="lienPokemon" href="{% url 'index' i.id %}">
                 <img src="{{ i.sprite }}">
-                <p style="text-align: center;">
+                <p id="infoPokemon">
                     N°{{ i.id }}
                     {{ i.name }}
                 </p>
@@ -18,8 +23,12 @@
         </div>
     {% endfor %}
 
-    <a href="{% url 'acceuil' offset=20 limit=40 %}"> Suivant </a>
-
+    <div id="lienPage">
+        {% if limit != 30 %}
+            <a href="{% url 'acceuil' offset|add:"-30" limit|add:"-30" %}"> Précédent </a>
+        {% endif %}
+        <a href="{% url 'acceuil' offset|add:"30" limit|add:"30" %}"> Suivant </a>
+    </div>
 
 </div>
 </body>
