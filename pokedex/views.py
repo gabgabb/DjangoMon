@@ -3,6 +3,7 @@ import json
 import logging
 from django.shortcuts import render
 
+
 def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
@@ -19,10 +20,12 @@ def index(request, nb):
 
     return render(request, 'pokedex/index.html', {'name': name, 'sprite': spriteUrl})
 
-def pageAcceuil(request, limit=20):
-    urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit="+str(limit)
+
+def pageAcceuil(request, offset=0, limit=30):
+    urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
 
     data = []
+
     for i in range(limit):
         responseAllPokemon = requests.get(urlAllPokemon).text
         parse_AllPokemon = json.loads(responseAllPokemon)
@@ -33,7 +36,6 @@ def pageAcceuil(request, limit=20):
         name = parse_AllPokemon["results"][i]["name"]
         spriteUrl = parse_Pokemon["sprites"]["other"]["official-artwork"]["front_default"]
 
-        data.append({"id": i+1, "name":name, "sprite": spriteUrl})
+        data.append({"id": i + offset + 1, "name": name, "sprite": spriteUrl})
 
-
-    return render(request, 'pokedex/acceuil.html', {'data':data})
+    return render(request, 'pokedex/acceuil.html', {'data': data})
