@@ -1,9 +1,12 @@
+import random
+
 from django.http.response import HttpResponseRedirect
 import requests
 import json
 import logging
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import PokemonForm
+
 
 def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
@@ -50,7 +53,6 @@ def src_pokemon(request):
             pokemon = response.text
             parse_json = json.loads(pokemon)
             id = parse_json["id"]
-            logging.info(id)
-            return HttpResponseRedirect(str(id))
-    else:
-        form = PokemonForm()
+            return redirect('index', str(id))
+        else:
+            return redirect('index', str(random.randint(0, 151)))
