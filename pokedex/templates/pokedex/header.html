@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <form id="barreRecherche" action="src_pokemon" method="post">
+    <form id="barreRecherche" action="{% url 'src_pokemon' %}" method="post">
         {% csrf_token %}
         <label for="pokemon">Recherche</label>
         <input class="form-control" id="pokemon" type="text" name="pokemon">
