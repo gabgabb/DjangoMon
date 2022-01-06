@@ -22,7 +22,7 @@ def index(request, nb):
     return render(request, 'pokedex/index.html', {'name': name, 'sprite': spriteUrl})
 
 
-def pageAcceuil(request, offset=0, limit=30):
+def pageAccueil(request, offset=0, limit=30):
     urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
     responseAllPokemon = requests.get(urlAllPokemon).text
     parse_AllPokemon = json.loads(responseAllPokemon)
@@ -33,12 +33,12 @@ def pageAcceuil(request, offset=0, limit=30):
 
         responsePokemon = requests.get(url_ALl).text
         parse_Pokemon = json.loads(responsePokemon)
-        name = parse_AllPokemon["results"][i]["name"]
+        name = json.loads(requests.get(parse_Pokemon["species"]["url"]).text)["names"][4]["name"]
         spriteUrl = parse_Pokemon["sprites"]["other"]["official-artwork"]["front_default"]
 
         data.append({"id": i + offset + 1, "name": name, "sprite": spriteUrl})
 
-    return render(request, 'pokedex/acceuil.html', {'data': data, 'offset': offset, 'limit': limit})
+    return render(request, 'pokedex/accueil.html', {'data': data, 'offset': offset, 'limit': limit})
 
 
 def src_pokemon(request):
