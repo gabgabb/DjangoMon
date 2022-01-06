@@ -4,8 +4,8 @@ from . import views
 
 urlpatterns = [
     path('<int:nb>', views.index, name="index"),
-    path('', views.pageAccueil),
-    path('<int:offset>/<int:limit>', views.pageAccueil, name="accueil"),
+    path('accueil/', views.pageAccueil),
+    path('accueil/<int:offset>/<int:limit>', views.pageAccueil, name="accueil"),
     path('src_pokemon', views.src_pokemon, name="src_pokemon"),
-    path('acceuil/src_pokemon', views.src_pokemon, name="src_pokemon"),
+    path('accueil/src_pokemon', views.src_pokemon, name="src_pokemon"),
 ]
