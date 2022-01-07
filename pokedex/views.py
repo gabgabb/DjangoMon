@@ -4,7 +4,6 @@ import requests
 import json
 import aiohttp
 import asyncio
-
 import logging
 
 from django.shortcuts import render, redirect
@@ -30,6 +29,7 @@ def index(request, nb):
 
 async def pageAccueil(request, offset=0, limit=30):
     start_time = time.time()  # timer
+
     urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
     responseAllPokemon = requests.get(urlAllPokemon).text
     parse_AllPokemon = json.loads(responseAllPokemon)
@@ -56,6 +56,7 @@ async def pageAccueil(request, offset=0, limit=30):
             print("--- %s seconds gather1 ---" % (time.time() - start_time))
             result2 = await asyncio.gather(*actionsAllSpecies)
             print("--- %s seconds gather2 ---" % (time.time() - start_time))
+
 
             for i, pokemonList in enumerate(result):
                 pokemonJson = json.loads(json.dumps(pokemonList))
@@ -89,3 +90,4 @@ def src_pokemon(request):
             return redirect('index', str(id))
         else:
             return redirect('index', str(random.randint(1, 1117)))
+
