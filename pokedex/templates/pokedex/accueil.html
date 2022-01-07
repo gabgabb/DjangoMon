@@ -25,9 +25,9 @@
 
     <div id="lienPage">
         {% if limit != 30 %}
-            <a href="{% url 'acceuil' offset|add:"-30" limit|add:"-30" %}"> Précédent </a>
+            <a href="{% url 'accueil' offset|add:"-30" limit|add:"-30" %}"> Précédent </a>
         {% endif %}
-        <a href="{% url 'acceuil' offset|add:"30" limit|add:"30" %}"> Suivant </a>
+        <a href="{% url 'accueil' offset|add:"30" limit|add:"30" %}"> Suivant </a>
     </div>
 
 </div>
