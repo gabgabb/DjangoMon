@@ -53,10 +53,11 @@ async def pageAccueil(request, offset=0, limit=30):
 
             print("--- %s seconds gather0 ---" % (time.time() - start_time))
             result = await asyncio.gather(*actionsAllPokemon)
+
             print("--- %s seconds gather1 ---" % (time.time() - start_time))
             result2 = await asyncio.gather(*actionsAllSpecies)
             print("--- %s seconds gather2 ---" % (time.time() - start_time))
-
+            await session.close()
 
             for i, pokemonList in enumerate(result):
                 pokemonJson = json.loads(json.dumps(pokemonList))
