@@ -5,8 +5,69 @@
     <title>{{ name }}</title>
     {% include "pokedex/header.html" %}
 </head>
-<body>
-    <p> {{ name }}</p>
-    <img src="{{ sprite }}" alt="img" style="width: 400px; height: 400px">
+<body style="display: flex; justify-items: center; flex-direction: column; text-align: center;">
+    <h1> {{ name }}</h1>
+    <div style="display: flex; justify-content: center;"><img src="{{ sprite }}" alt="img" style="width: 300px; height: 300px" /></div>
+    <div style="display: flex; flex-direction: row; justify-content: center;">
+        {% for type in types %}
+            {% if 'grass' == type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#9bcc50;">
+            {% endif %}
+            {% if 'poison' == type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#B97FC9;">
+            {% endif %}
+            {% if 'fire' == type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#FD7D24;">
+            {% endif %}
+            {% if 'psychic' == type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#F366B9;">
+            {% endif %}
+            {% if 'water' == type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#4592C4;">
+            {% endif %}
+            {% if 'ice' == type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#51C4E7;">
+            {% endif %}
+            {% if 'rock' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#A38C21;">
+            {% endif %}
+            {% if 'bug' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#729F3F;">
+            {% endif %}
+            {% if 'normal' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#A4ACAF;">
+            {% endif %}
+            {% if 'fighting' in typ  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#D56723;">
+            {% endif %}
+            {% if 'electric' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#EED535;">
+            {% endif %}
+            {% if 'fairy' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#FDB9E9;">
+            {% endif %}
+            {% if 'steel' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#9EB7B8;">
+            {% endif %}
+            {% if 'ghost' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#7B62A3; color: white">
+            {% endif %}
+            {% if 'dark' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#707070; color: white;">
+            {% endif %}
+            {% if 'dragon' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#7038F8; color: white;">
+            {% endif %}
+            {% if 'flying' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#659BCF;">
+            {% endif %}
+            {% if 'ground' in type  %}
+                <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:#664024; color: white">
+            {% endif %}
+            {{ type }}</p>
+        {% endfor %}
+    </div>
+    <p style="font-size: 20px;"><br> {{ taille }}m | {{ poids }}kg</p>
+    <p style="font-size: 20px;">Habitat : {{ habitat }}</p>
 </body>
 </html>
