@@ -5,6 +5,7 @@ import json
 import aiohttp
 import asyncio
 import logging
+import string
 
 from django.shortcuts import render, redirect
 from .forms import PokemonForm
@@ -23,8 +24,19 @@ def index(request, nb):
     pokemon = response.text
     parse_json = json.loads(pokemon)
     name = parse_json["names"][4]["name"]
+    poids = parse_pokemon["weight"] / 10
+    taille = parse_pokemon["height"] / 10
+    habitat = parse_json["habitat"]["name"]
 
-    return render(request, 'pokedex/index.html', {'name': name, 'sprite': spriteUrl})
+    typesAPI = parse_pokemon["types"]
+    types = []
+    
+    for i in range(len(typesAPI)):
+        print(i)
+        t = parse_pokemon["types"][i]["type"]["name"]
+        types.append(t)
+              
+    return render(request, 'pokedex/index.html', {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitat, 'types': types})
 
 
 async def pageAccueil(request, offset=0, limit=30):
