@@ -34,7 +34,6 @@ def index(request, nb):
     colors = []
 
     for i in range(len(typesAPI)):
-
         urlType = parse_pokemon["types"][i]["type"]["url"]
         responseType = requests.get(urlType).text
         parse_type = json.loads(responseType)
@@ -47,7 +46,7 @@ def index(request, nb):
                    'types': types, 'color': colors})
 
 
-async def pageAccueil(request, offset=0, limit=30):
+async def pageAccueil(request, offset=0, limit=32):
     urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
     responseAllPokemon = requests.get(urlAllPokemon).text
     parse_AllPokemon = json.loads(responseAllPokemon)
@@ -60,7 +59,7 @@ async def pageAccueil(request, offset=0, limit=30):
     actionsAllSpecies = []
     dataRender = []
 
-    if limit >= 30 or offset < limit:
+    if limit >= 32 or offset < limit:
         async with aiohttp.ClientSession() as session:
             for i in range(limit - offset):
                 url_ALl = parse_AllPokemon["results"][i]["url"]
@@ -90,21 +89,30 @@ async def getPokemonData(session, url):
         return dataPokemon
 
 
-def src_pokemon(request):
+async def src_pokemon(request):
     if request.method == 'POST':
         form = PokemonForm(request.POST)
         if form.is_valid():
-            url = "https://pokeapi.co/api/v2/pokemon/" + str(form.data.get('pokemon'))
-            response = requests.get(url).text
-            parse_json = json.loads(response)
-            id = parse_json["id"]
+            actionsAllPokemon = []
+            async with aiohttp.ClientSession() as session:
+                for i in range(1,890):
+                    url = "https://pokeapi.co/api/v2/pokemon-species/" + str(i)
+                    actionsAllPokemon.append(asyncio.ensure_future(getPokemonData(session, url)))
 
-            return redirect('index', str(id))
+                result = await asyncio.gather(*actionsAllPokemon)
+
+                for i, pokemonList in enumerate(result):
+                    nameFrench = json.loads(json.dumps(result[i]))["names"][4]["name"]
+                    if nameFrench == str(form.data.get('pokemon')).capitalize():
+                        id = json.loads(json.dumps(result[i]))["id"]
+                        return redirect('index', str(id))
         else:
             return redirect('index', str(random.randint(1, 1117)))
-        
+
+
 def team_pokemon(request):
-    return render(request,'pokedex/team.html')
+    return render(request, 'pokedex/team.html')
+
 
 def colorType(type):
     return {
@@ -118,8 +126,8 @@ def colorType(type):
         "Insecte": "#729F3F",
         "Normal": "#A4ACAF",
         "Combat": "#D56723",
-        "Electrique": "#EED535",
-        "Fee": "#FDB9E9",
+        "Électrik": "#EED535",
+        "Fée": "#FDB9E9",
         "Acier": "#9EB7B8",
         "Spectre": "7B62A3",
         "Tenebre": "#707070",
