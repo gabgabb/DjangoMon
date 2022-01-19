@@ -10,11 +10,26 @@
 
 </head>
 <body>
-    <form id="barreRecherche" action="{% url 'src_pokemon' %}" method="post">
-        {% csrf_token %}
-        <label for="pokemon">Recherche</label>
-        <input class="form-control" id="pokemon" type="text" name="pokemon">
-        <button class="btn btn-success" type="submit">OK</button>
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'accueil' %}">DjangoMon</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a href="{% url 'team_pokemon' %}" class="btn btn-outline-secondary">TEAM</a>
+              </li>
+            </ul>
+            <form id="barreRecherche" action="{% url 'src_pokemon' %}" method="post">
+                {% csrf_token %}
+                <label for="pokemon">Recherche</label>
+                <input class="form-control" id="pokemon" type="text" name="pokemon">
+                <button class="btn btn-success" type="submit">OK</button>
+            </form>
+          </div>
+        </div>
+      </nav>
 </body>
 </html>
