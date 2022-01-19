@@ -37,3 +37,33 @@
     text-align: center;
 }
 
+#pokemon {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#imgPokemon {
+    display: flex;
+    justify-content: center;
+}
+
+#typePokemon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
+}
+
+#couleurType {
+    font-size: 30px;
+    border-radius: 5px;
+    padding: 3px;
+    margin: 10px;
+}
+
+.infoPokemon {
+    font-size: 20px;
+}
+
