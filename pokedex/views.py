@@ -1,5 +1,4 @@
 import random
-import time
 import requests
 import json
 import aiohttp
@@ -7,7 +6,6 @@ import asyncio
 import logging
 import string
 
-from django import template
 from django.shortcuts import render, redirect
 from .forms import PokemonForm
 
@@ -16,36 +14,40 @@ def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
 
-    responsePokemon = requests.get(urlPokemon)
-    poke = responsePokemon.text
-    parse_pokemon = json.loads(poke)
+    responsePokemon = requests.get(urlPokemon).text
+    parse_pokemon = json.loads(responsePokemon)
     spriteUrl = parse_pokemon["sprites"]["other"]["official-artwork"]["front_default"]
 
-    response = requests.get(url)
-    pokemon = response.text
-    parse_json = json.loads(pokemon)
+    response = requests.get(url).text
+    parse_json = json.loads(response)
     name = parse_json["names"][4]["name"]
     poids = parse_pokemon["weight"] / 10
     taille = parse_pokemon["height"] / 10
-    habitat = parse_json["habitat"]["name"]
+
+    habitatUrl = parse_json["habitat"]["url"]
+    responseHabitat = requests.get(habitatUrl)
+    parse_habitat = json.loads(responseHabitat.text)
+    habitatFrench = parse_habitat["names"][0]["name"]
+
     typesAPI = parse_pokemon["types"]
     types = []
     colors = []
 
     for i in range(len(typesAPI)):
-        print(i)
-        t = parse_pokemon["types"][i]["type"]["name"]
-        types.append(t)
-        colors.append(colorType(t))
+
+        urlType = parse_pokemon["types"][i]["type"]["url"]
+        responseType = requests.get(urlType).text
+        parse_type = json.loads(responseType)
+        typeFrench = parse_type["names"][3]["name"]
+        types.append(typeFrench)
+        colors.append(colorType(typeFrench))
 
     return render(request, 'pokedex/index.html',
-                  {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitat,
+                  {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
                    'types': types, 'color': colors})
 
 
 async def pageAccueil(request, offset=0, limit=30):
-    start_time = time.time()  # timer
-
     urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
     responseAllPokemon = requests.get(urlAllPokemon).text
     parse_AllPokemon = json.loads(responseAllPokemon)
@@ -67,23 +69,16 @@ async def pageAccueil(request, offset=0, limit=30):
                 actionsAllPokemon.append(asyncio.ensure_future(getPokemonData(session, url_ALl)))
                 actionsAllSpecies.append(asyncio.ensure_future(getPokemonData(session, url_all_species)))
 
-            print("--- %s seconds gather0 ---" % (time.time() - start_time))
             result = await asyncio.gather(*actionsAllPokemon)
-
-            print("--- %s seconds gather1 ---" % (time.time() - start_time))
             result2 = await asyncio.gather(*actionsAllSpecies)
-            print("--- %s seconds gather2 ---" % (time.time() - start_time))
             await session.close()
 
             for i, pokemonList in enumerate(result):
                 pokemonJson = json.loads(json.dumps(pokemonList))
                 nameFrench = json.loads(json.dumps(result2[i]))["names"][4]["name"]
-                # pokemonSpeciesList = await asyncio.gather(getPokemonData(session, pokemonJson["species"]["url"]))
-                # nameFrench = json.loads(requests.get(pokemonJson["species"]["url"]).text)["names"][4]["name"]
                 spriteUrl = pokemonJson["sprites"]["other"]["official-artwork"]["front_default"]
                 dataRender.append({"id": i + offset + 1, "name": nameFrench, "sprite": spriteUrl})
 
-        print("--- %s seconds END ---" % (time.time() - start_time))
         return render(request, 'pokedex/accueil.html', {'data': dataRender, 'offset': offset, 'limit': limit})
     else:
         return redirect('accueil')
@@ -100,36 +95,33 @@ def src_pokemon(request):
         form = PokemonForm(request.POST)
         if form.is_valid():
             url = "https://pokeapi.co/api/v2/pokemon/" + str(form.data.get('pokemon'))
-            response = requests.get(url)
-            pokemon = response.text
-            parse_json = json.loads(pokemon)
+            response = requests.get(url).text
+            parse_json = json.loads(response)
             id = parse_json["id"]
+
             return redirect('index', str(id))
         else:
             return redirect('index', str(random.randint(1, 1117)))
 
 
 def colorType(type):
-    color = ""
     return {
-        "grass": "#9bcc50",
-        "poison": "#B97FC9",
-        "fire": "#FD7D24",
-        "psychic": "#F366B9",
-        "water": "#4592C4",
-        "ice": "#51C4E7",
-        "rock": "#A38C21",
-        "bug": "#729F3F",
-        "normal": "#A4ACAF",
-        "fighting": "#D56723",
-        "electric": "#EED535",
-        "fairy": "#FDB9E9"
+        "Plante": "#9bcc50",
+        "Poison": "#B97FC9",
+        "Feu": "#FD7D24",
+        "Psy": "#F366B9",
+        "Eau": "#4592C4",
+        "Glace": "#51C4E7",
+        "Roche": "#A38C21",
+        "Insecte": "#729F3F",
+        "Normal": "#A4ACAF",
+        "Combat": "#D56723",
+        "Electrique": "#EED535",
+        "Fee": "#FDB9E9",
+        "Acier": "#9EB7B8",
+        "Spectre": "7B62A3",
+        "Tenebre": "#707070",
+        "Dragon": "#7038F8",
+        "Vol": "#659BCF",
+        "Sol": "#664024",
     }[type]
-
-
-register = template.Library()
-
-
-@register.filter
-def index(l, i):
-    return l[i]
