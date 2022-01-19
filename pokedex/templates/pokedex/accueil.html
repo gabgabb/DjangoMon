@@ -15,7 +15,7 @@
     {% for i in data %}
         <div id="cardPokemon">
             <a id="lienPokemon" href="{% url 'index' i.id %}">
-                <img src="{{ i.sprite }}">
+                <img id="imgAcceuil" src="{{ i.sprite }}">
                 <p id="infoPokemon">
                     N°{{ i.id }}
                     {{ i.name }}
@@ -25,10 +25,10 @@
     {% endfor %}
 
     <div id="lienPage">
-        {% if limit != 30 %}
-            <a href="{% url 'accueil' offset|add:"-30" limit|add:"-30" %}"> Précédent </a>
+        {% if limit != 32 %}
+            <a class="btn btn-info btn-lg" href="{% url 'accueil' offset|add:"-32" limit|add:"-32" %}"> Précédent </a>
         {% endif %}
-        <a href="{% url 'accueil' offset|add:"30" limit|add:"30" %}"> Suivant </a>
+        <a class="btn btn-info btn-lg" href="{% url 'accueil' offset|add:"32" limit|add:"32" %}"> Suivant </a>
     </div>
 
 </div>
