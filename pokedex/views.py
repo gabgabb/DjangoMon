@@ -103,4 +103,6 @@ def src_pokemon(request):
             return redirect('index', str(id))
         else:
             return redirect('index', str(random.randint(1, 1117)))
-
+        
+def team_pokemon(request):
+    return render(request,'pokedex/team.html')
