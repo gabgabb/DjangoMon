@@ -7,6 +7,7 @@ import asyncio
 import logging
 import string
 
+from django import template
 from django.shortcuts import render, redirect
 from .forms import PokemonForm
 
@@ -27,16 +28,19 @@ def index(request, nb):
     poids = parse_pokemon["weight"] / 10
     taille = parse_pokemon["height"] / 10
     habitat = parse_json["habitat"]["name"]
-
     typesAPI = parse_pokemon["types"]
     types = []
-    
+    colors = []
+
     for i in range(len(typesAPI)):
         print(i)
         t = parse_pokemon["types"][i]["type"]["name"]
         types.append(t)
-              
-    return render(request, 'pokedex/index.html', {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitat, 'types': types})
+        colors.append(colorType(t))
+
+    return render(request, 'pokedex/index.html',
+                  {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitat,
+                   'types': types, 'color': colors})
 
 
 async def pageAccueil(request, offset=0, limit=30):
@@ -104,3 +108,28 @@ def src_pokemon(request):
         else:
             return redirect('index', str(random.randint(1, 1117)))
 
+
+def colorType(type):
+    color = ""
+    return {
+        "grass": "#9bcc50",
+        "poison": "#B97FC9",
+        "fire": "#FD7D24",
+        "psychic": "#F366B9",
+        "water": "#4592C4",
+        "ice": "#51C4E7",
+        "rock": "#A38C21",
+        "bug": "#729F3F",
+        "normal": "#A4ACAF",
+        "fighting": "#D56723",
+        "electric": "#EED535",
+        "fairy": "#FDB9E9"
+    }[type]
+
+
+register = template.Library()
+
+
+@register.filter
+def index(l, i):
+    return l[i]
