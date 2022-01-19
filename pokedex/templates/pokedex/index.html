@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <title>{{ name }}</title>
     {% include "pokedex/header.html" %}
-    {% load views %}
+    {% load extra_temp %}
+
 </head>
-<body style="display: flex; justify-items: center; flex-direction: column; text-align: center;">
+
+<body id="pokemon" >
     <h1> {{ name }}</h1>
-    <div style="display: flex; justify-content: center;"><img src="{{ sprite }}" alt="img" style="width: 300px; height: 300px" /></div>
-    <div style="display: flex; flex-direction: row; justify-content: center;">
+    <div id="imgPokemon" ><img src="{{ sprite }}" alt="img" style="width: 300px; height: 300px" /></div>
+    <div id="typePokemon" >
 
             {% for type in types %}
-                    <p style="font-size: 30px; border-radius: 5px; padding: 3px; margin: 10px; background-color:{{ color|index:forloop.counter0 }}; color: white"> {{ type }}</p>
+                    <p id="couleurType" style=" background-color:{{ color|tabElement:forloop.counter0 }}; "> {{ type|upperCase }}</p>
             {% endfor %}
     </div>
-    <p style="font-size: 20px;"><br> {{ taille }}m | {{ poids }}kg</p>
-    <p style="font-size: 20px;">Habitat : {{ habitat }}</p>
+    <p class="infoPokemon" ><br> {{ taille }}m | {{ poids }}kg</p>
+    <p class="infoPokemon">Habitat : {{ habitat|upperCase }}</p>
 </body>
 </html>
