@@ -84,3 +84,17 @@
     margin: auto;
     margin-top: 1%;
 }
+
+.pokeball{
+    width: 50px;
+	height: 50px;
+    margin-right: 1%;
+}
+
+#cardTeamPokemon {
+    display: inline-block;
+    margin: 2% 0 0 2%;
+    width: 33%;
+    background: #d7d6d6;
+    border-radius: 20px;
+}
