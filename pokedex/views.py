@@ -139,7 +139,7 @@ async def src_pokemon(request):
 
                 return redirect('index', str(id))
         else:
-            return redirect('index', str(random.randint(1, 899)))
+            return redirect('index', str(random.randint(1, 898)))
 
 
 def team_pokemon(request):
