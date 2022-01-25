@@ -152,7 +152,7 @@ def colorType(type):
         "Électrik": "#EED535",
         "Fée": "#FDB9E9",
         "Acier": "#9EB7B8",
-        "Spectre": "7B62A3",
+        "Spectre": "#7B62A3",
         "Ténèbres": "#707070",
         "Dragon": "#7038F8",
         "Vol": "#659BCF",
