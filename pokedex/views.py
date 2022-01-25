@@ -12,6 +12,10 @@ from .forms import PokemonForm
 from .models import Team
 
 def index(request, nb):
+    
+    if nb == 0:
+        return render(request, 'pokedex/index.html', {'name': "null"})
+    
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
 
@@ -132,11 +136,18 @@ async def src_pokemon(request):
                 await session.close()
 
                 print("--- %s seconds after for action ---" % (time.time() - start_time))
+                
+                isValid= False
+                
                 for index in resultList:
                     if decodeText(json.loads(json.dumps(index))["names"][4]["name"]) == nameForm:
                         print("--- %s seconds if  ---" % (time.time() - start_time))
                         id = json.loads(json.dumps(index))["id"]
-
+                        isValid = True
+                
+                if isValid == False:
+                    id = 0
+                
                 return redirect('index', str(id))
         else:
             return redirect('index', str(random.randint(1, 898)))
