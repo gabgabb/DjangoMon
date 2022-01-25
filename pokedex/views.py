@@ -121,7 +121,8 @@ async def src_pokemon(request):
         form = PokemonForm(request.POST)
         if form.is_valid():
             actionsAllPokemon = []
-            nameForm = decodeText(str(form.data.get('pokemon')).capitalize())
+            nameForm = decodeText(str(form.data.get('pokemon')).strip().capitalize())
+            id = None
 
             async with aiohttp.ClientSession() as session:
 
@@ -137,6 +138,8 @@ async def src_pokemon(request):
                     if decodeText(json.loads(json.dumps(index))["names"][4]["name"]) == nameForm:
                         print("--- %s seconds if  ---" % (time.time() - start_time))
                         id = json.loads(json.dumps(index))["id"]
+                if id is None:
+                    return handleError(request)
 
                 return redirect('index', str(id))
         else:
@@ -176,3 +179,6 @@ def colorType(type):
         "Vol": "#659BCF",
         "Sol": "#664024",
     }[type]
+
+def handleError(request):
+    return render(request, "pokedex/error.html")

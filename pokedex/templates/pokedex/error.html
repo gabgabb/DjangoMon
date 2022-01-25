@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Erreur !</title>
+    {% include "pokedex/header.html" %}
+</head>
+
+<body>
+<div id="errorPage">
+    <h4> Oh non ! Ce que vous cherchez ne se trouve pas ici !</h4>
+    <img id="imgError" src="{% static 'ressources/psykokwak_error.png' %}" alt="errorImg">
+</div>
+</body>
+</html>
