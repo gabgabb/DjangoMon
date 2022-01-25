@@ -21,7 +21,14 @@ def index(request, nb):
 
     response = requests.get(url).text
     parse_json = json.loads(response)
-    name = parse_json["names"][4]["name"]
+    names = parse_json["names"]
+    langid = 0
+    
+    for lang in names:
+        if lang["language"]["name"] == "fr":
+            langid = names.index(lang)
+        
+    name = parse_json["names"][langid]["name"]
     poids = parse_pokemon["weight"] / 10
     taille = parse_pokemon["height"] / 10
 
@@ -69,6 +76,7 @@ async def pageAccueil(request, offset=0, limit=32):
             if limit == 928:
                 limit = 898
             
+            
             for i in range(limit - offset):
                 url_ALl = parse_AllPokemon["results"][i]["url"]
                 url_all_species = species2["results"][i]["url"]
@@ -82,7 +90,16 @@ async def pageAccueil(request, offset=0, limit=32):
 
             for i, pokemonList in enumerate(result):
                 pokemonJson = json.loads(json.dumps(pokemonList))
-                nameFrench = json.loads(json.dumps(result2[i]))["names"][4]["name"]
+                
+                names = json.loads(json.dumps(result2[i]))["names"]
+                langid = 0
+                
+                for lang in names:
+                    if lang["language"]["name"] == "fr":
+                        langid = names.index(lang)
+                
+                nameFrench = json.loads(json.dumps(result2[i]))["names"][langid]["name"]
+                # nameFrench = json.loads(json.dumps(result2[i]))["names"][4]["name"]
                 spriteUrl = pokemonJson["sprites"]["other"]["official-artwork"]["front_default"]
                 dataRender.append({"id": i + offset + 1, "name": nameFrench, "sprite": spriteUrl})
 
