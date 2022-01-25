@@ -21,7 +21,14 @@ def index(request, nb):
 
     response = requests.get(url).text
     parse_json = json.loads(response)
-    name = parse_json["names"][4]["name"]
+    names = parse_json["names"]
+    langid = 0
+    
+    for lang in names:
+        if lang["language"]["name"] == "fr":
+            langid = names.index(lang)
+        
+    name = parse_json["names"][langid]["name"]
     poids = parse_pokemon["weight"] / 10
     taille = parse_pokemon["height"] / 10
     id = parse_json["id"]
@@ -66,6 +73,11 @@ async def pageAccueil(request, offset=0, limit=32):
 
     if limit >= 32 or offset < limit:
         async with aiohttp.ClientSession() as session:
+            
+            if limit == 928:
+                limit = 898
+            
+            
             for i in range(limit - offset):
                 url_ALl = parse_AllPokemon["results"][i]["url"]
                 url_all_species = species2["results"][i]["url"]
@@ -79,7 +91,16 @@ async def pageAccueil(request, offset=0, limit=32):
 
             for i, pokemonList in enumerate(result):
                 pokemonJson = json.loads(json.dumps(pokemonList))
-                nameFrench = json.loads(json.dumps(result2[i]))["names"][4]["name"]
+                
+                names = json.loads(json.dumps(result2[i]))["names"]
+                langid = 0
+                
+                for lang in names:
+                    if lang["language"]["name"] == "fr":
+                        langid = names.index(lang)
+                
+                nameFrench = json.loads(json.dumps(result2[i]))["names"][langid]["name"]
+                # nameFrench = json.loads(json.dumps(result2[i]))["names"][4]["name"]
                 spriteUrl = pokemonJson["sprites"]["other"]["official-artwork"]["front_default"]
                 dataRender.append({"id": i + offset + 1, "name": nameFrench, "sprite": spriteUrl})
 
@@ -119,7 +140,7 @@ async def src_pokemon(request):
 
                 return redirect('index', str(id))
         else:
-            return redirect('index', str(random.randint(1, 899)))
+            return redirect('index', str(random.randint(1, 898)))
 
 
 def team_pokemon(request):
@@ -149,7 +170,7 @@ def colorType(type):
         "Électrik": "#EED535",
         "Fée": "#FDB9E9",
         "Acier": "#9EB7B8",
-        "Spectre": "7B62A3",
+        "Spectre": "#7B62A3",
         "Ténèbres": "#707070",
         "Dragon": "#7038F8",
         "Vol": "#659BCF",
