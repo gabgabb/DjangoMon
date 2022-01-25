@@ -65,6 +65,10 @@ async def pageAccueil(request, offset=0, limit=32):
 
     if limit >= 32 or offset < limit:
         async with aiohttp.ClientSession() as session:
+            
+            if limit == 928:
+                limit = 898
+            
             for i in range(limit - offset):
                 url_ALl = parse_AllPokemon["results"][i]["url"]
                 url_all_species = species2["results"][i]["url"]
