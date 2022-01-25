@@ -1,10 +1,10 @@
 import random
+import time
 import requests
 import json
 import aiohttp
 import asyncio
-import logging
-import string
+import unicodedata
 
 from django.shortcuts import render, redirect
 from .forms import PokemonForm
@@ -24,10 +24,13 @@ def index(request, nb):
     poids = parse_pokemon["weight"] / 10
     taille = parse_pokemon["height"] / 10
 
-    habitatUrl = parse_json["habitat"]["url"]
-    responseHabitat = requests.get(habitatUrl)
-    parse_habitat = json.loads(responseHabitat.text)
-    habitatFrench = parse_habitat["names"][0]["name"]
+    if parse_json["habitat"] is not None:
+        habitatUrl = parse_json["habitat"]["url"]
+        responseHabitat = requests.get(habitatUrl)
+        parse_habitat = json.loads(responseHabitat.text)
+        habitatFrench = parse_habitat["names"][0]["name"]
+    else:
+        habitatFrench = "X"
 
     typesAPI = parse_pokemon["types"]
     types = []
@@ -90,28 +93,42 @@ async def getPokemonData(session, url):
 
 
 async def src_pokemon(request):
+    start_time = time.time()
     if request.method == 'POST':
         form = PokemonForm(request.POST)
         if form.is_valid():
             actionsAllPokemon = []
+            nameForm = decodeText(str(form.data.get('pokemon')).capitalize())
+
             async with aiohttp.ClientSession() as session:
-                for i in range(1,890):
+
+                for i in range(1, 899):
                     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(i)
                     actionsAllPokemon.append(asyncio.ensure_future(getPokemonData(session, url)))
 
-                result = await asyncio.gather(*actionsAllPokemon)
+                resultList = await asyncio.gather(*actionsAllPokemon)
+                await session.close()
 
-                for i, pokemonList in enumerate(result):
-                    nameFrench = json.loads(json.dumps(result[i]))["names"][4]["name"]
-                    if nameFrench == str(form.data.get('pokemon')).capitalize():
-                        id = json.loads(json.dumps(result[i]))["id"]
-                        return redirect('index', str(id))
+                print("--- %s seconds after for action ---" % (time.time() - start_time))
+                for index in resultList:
+                    if decodeText(json.loads(json.dumps(index))["names"][4]["name"]) == nameForm:
+                        print("--- %s seconds if  ---" % (time.time() - start_time))
+                        id = json.loads(json.dumps(index))["id"]
+
+                return redirect('index', str(id))
         else:
-            return redirect('index', str(random.randint(1, 1117)))
+            return redirect('index', str(random.randint(1, 899)))
 
 
 def team_pokemon(request):
     return render(request, 'pokedex/team.html')
+
+
+def decodeText(text):
+    text = unicodedata.normalize('NFD', text)
+    text = text.encode('ascii', 'ignore')
+    text = text.decode("utf-8")
+    return str(text)
 
 
 def colorType(type):
@@ -130,7 +147,7 @@ def colorType(type):
         "Fée": "#FDB9E9",
         "Acier": "#9EB7B8",
         "Spectre": "7B62A3",
-        "Tenebre": "#707070",
+        "Ténèbres": "#707070",
         "Dragon": "#7038F8",
         "Vol": "#659BCF",
         "Sol": "#664024",
