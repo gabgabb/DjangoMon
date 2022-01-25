@@ -1,3 +1,4 @@
+from multiprocessing import Event
 import random
 import time
 import requests
@@ -8,7 +9,7 @@ import unicodedata
 
 from django.shortcuts import render, redirect
 from .forms import PokemonForm
-
+from .models import Team
 
 def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
@@ -121,8 +122,9 @@ async def src_pokemon(request):
 
 
 def team_pokemon(request):
-    return render(request, 'pokedex/team.html')
-
+    team = Team.objects.all()
+    return render(request, 'pokedex/team.html',{'team':team})
+    
 
 def decodeText(text):
     text = unicodedata.normalize('NFD', text)
