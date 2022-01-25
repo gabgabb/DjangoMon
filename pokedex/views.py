@@ -24,6 +24,7 @@ def index(request, nb):
     name = parse_json["names"][4]["name"]
     poids = parse_pokemon["weight"] / 10
     taille = parse_pokemon["height"] / 10
+    id = parse_json["id"]
 
     if parse_json["habitat"] is not None:
         habitatUrl = parse_json["habitat"]["url"]
@@ -47,7 +48,7 @@ def index(request, nb):
 
     return render(request, 'pokedex/index.html',
                   {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
-                   'types': types, 'color': colors})
+                   'types': types, 'color': colors, 'nb': id})
 
 
 async def pageAccueil(request, offset=0, limit=32):
