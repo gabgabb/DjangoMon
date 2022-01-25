@@ -43,16 +43,18 @@
     text-align: center;
 }
 
-#pokemon {
-    display: flex;
+#pokemon, #errorPage {
+    display: inherit;
     justify-items: center;
     flex-direction: column;
     text-align: center;
 }
 
-#imgPokemon {
-    display: flex;
+#imgPokemon, #imgError {
+    display: initial;
     justify-content: center;
+    width: 300px;
+    height: 300px;
 }
 
 #typePokemon {
@@ -73,7 +75,6 @@
     font-size: 20px;
 }
 
-
 .btn-info {
     margin: 1% 1% 1% 1%;
     display: inline-block;
@@ -84,6 +85,13 @@
     margin: auto;
     margin-top: 1%;
 }
+
+h4 {
+    margin-top: 5%;
+}
+
+
+
 
 .pokeball{
     width: 50px;

@@ -12,9 +12,8 @@
         <button id="btnAddTeam" class="btn btn-outline-danger" type="submit"> + Ajouter à la Team</button>
         <div class="cardPokemon">
         <h1> {{ name }}</h1>
-        <div id="imgPokemon" ><img src="{{ sprite }}" alt="img" style="width: 300px; height: 300px" /></div>
+        <img id="imgPokemon" src="{{ sprite }}" alt="img"/>
         <div id="typePokemon" >
-
                 {% for type in types %}
                         <p id="couleurType" style=" background-color:{{ color|tabElement:forloop.counter0 }}; "> {{ type|upperCase }}</p>
                 {% endfor %}
