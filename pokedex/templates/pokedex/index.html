@@ -22,5 +22,13 @@
         <p class="infoPokemon" ><br> {{ taille }}m | {{ poids }}kg</p>
         <p class="infoPokemon">Habitat : {{ habitat|upperCase }}</p>
     </div>
+    <div>
+        {% if nb != 1 %}
+        <a class="btn btn-info btn-lg" href="{% url 'index' nb|add:"-1" %}"> Précédent </a>
+        {% endif %}
+        {% if nb != 898 %}
+        <a class="btn btn-info btn-lg" href="{% url 'index' nb|add:"1" %}"> Suivant </a>
+        {% endif %}
+    </div>
 </body>
 </html>
