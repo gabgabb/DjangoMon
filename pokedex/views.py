@@ -113,7 +113,7 @@ async def src_pokemon(request):
 
 def team_pokemon(request):
     team = Team.objects.all()
-    return render(request, 'pokedex/team.html',{'team':team})
+    return render(request, 'pokedex/team.html')
     
 
 def colorType(type):
