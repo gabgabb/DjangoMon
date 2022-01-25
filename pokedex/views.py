@@ -13,7 +13,24 @@ from .models import Team
 
 def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
+
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
+
+    if(nb != 1):
+        prevUrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb-1)
+        prevResponsePokemon = requests.get(prevUrlPokemon).text
+        prevParse_pokemon = json.loads(prevResponsePokemon)
+        prevSpriteUrl = prevParse_pokemon["sprites"]["front_default"]
+    else:
+        prevSpriteUrl = None
+
+    if(nb != 898):
+        nextUrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb+1)
+        nextResponsePokemon = requests.get(nextUrlPokemon).text
+        nextParse_pokemon = json.loads(nextResponsePokemon)
+        nextSpriteUrl = nextParse_pokemon["sprites"]["front_default"]
+    else:
+        nextSpriteUrl = None
 
     responsePokemon = requests.get(urlPokemon).text
     parse_pokemon = json.loads(responsePokemon)
@@ -47,7 +64,7 @@ def index(request, nb):
         colors.append(colorType(typeFrench))
 
     return render(request, 'pokedex/index.html',
-                  {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
+                  {'name': name, 'sprite': spriteUrl, 'prev_sprite': prevSpriteUrl, 'next_sprite': nextSpriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
                    'types': types, 'color': colors, 'nb': id})
 
 
