@@ -1,13 +1,13 @@
 # DjangoMon
 
-# installer toutes les dépendances
-pip install -r requiements.txt
+# Introduction
 
-# run server
+Realisation d'un Pokédex en Python / Django
+
+# Installation de Django
+pip install Django
+
+# Lancer le projet
 py manage.py runserver
 
-# créer la migration
-py manage.py makemigrations
-
-# migrer vers sa base
-py manage.py migrate
+Projet réalisé par Gabriel F, Yohann D, Antoine D, Romain M

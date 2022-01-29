@@ -70,7 +70,8 @@
 }
 
 .infoPokemon {
-    font-size: 20px;
+    font-size: 25px;
+    text-align: center;
 }
 
 
@@ -82,7 +83,21 @@
 
 #btnAddTeam{
     margin: auto;
-    margin-top: 1%;
+    width: 65px;
+	height: 65px;
+    border-style: hidden;
+}
+
+#btnDelTeam{
+    margin: auto;
+    width: 65px;
+	height: 65px;
+    border-style: hidden;
+    float: right;
+}
+
+.boutonPokeball{
+    display: inline-block;
 }
 
 .pokeball{
@@ -93,8 +108,18 @@
 
 #cardTeamPokemon {
     display: inline-block;
-    margin: 2% 0 0 2%;
-    width: 33%;
+    margin: 5px;
+    width: 30%;
     background: #d7d6d6;
     border-radius: 20px;
+}
+
+.poketeam{
+    text-align: center;
+}
+
+#imgTeam {
+    display: block;
+    margin: auto;
+    width: 40%;
 }

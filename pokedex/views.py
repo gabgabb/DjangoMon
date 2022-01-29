@@ -11,6 +11,8 @@ from django.shortcuts import render, redirect
 from .forms import PokemonForm
 from .models import Team
 
+team = []
+
 def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
@@ -46,8 +48,8 @@ def index(request, nb):
         colors.append(colorType(typeFrench))
 
     return render(request, 'pokedex/index.html',
-                  {'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
-                   'types': types, 'color': colors})
+                  {'nb':nb,'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
+                   'types': types, 'color': colors,'team':team})
 
 
 async def pageAccueil(request, offset=0, limit=32):
@@ -119,11 +121,30 @@ async def src_pokemon(request):
                 return redirect('index', str(id))
         else:
             return redirect('index', str(random.randint(1, 899)))
+        
+def addPokemon(request, nb):
+    length = len(team)
+    if length <= 4:
+        team.append(nb)
+    return redirect('team_pokemon')
 
+def delPokemon(request,nb):
+    del team[nb]
+    return redirect('team_pokemon')
 
 def team_pokemon(request):
-    team = Team.objects.all()
-    return render(request, 'pokedex/team.html')
+    tabTeam = []
+    for pokemon in team:
+        urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(pokemon)  
+        urlSpecies = "https://pokeapi.co/api/v2/pokemon-species/" + str(pokemon)
+        responsePokemon = requests.get(urlPokemon).text
+        parse_pokemon = json.loads(responsePokemon)
+        responseSpecies = requests.get(urlSpecies).text
+        parse_species = json.loads(responseSpecies)
+        name = parse_species["names"][4]["name"]
+        spriteUrl = parse_pokemon["sprites"]["other"]["official-artwork"]["front_default"]
+        tabTeam.append({'id':pokemon,'name':name, 'sprite':spriteUrl})
+    return render(request, 'pokedex/team.html', {'team':tabTeam})
     
 
 def decodeText(text):
