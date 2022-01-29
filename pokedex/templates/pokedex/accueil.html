@@ -25,10 +25,14 @@
     {% endfor %}
 
     <div id="lienPage">
-        {% if limit != 32 %}
+        {% if limit != 32 and limit != 898  %}
             <a class="btn btn-info btn-lg" href="{% url 'accueil' offset|add:"-32" limit|add:"-32" %}"> Précédent </a>
+        {% elif limit == 898 %}
+            <a class="btn btn-info btn-lg" href="{% url 'accueil' offset|add:"-32" limit|add:"-2" %}"> Précédent </a>
         {% endif %}
-        <a class="btn btn-info btn-lg" href="{% url 'accueil' offset|add:"32" limit|add:"32" %}"> Suivant </a>
+        {% if limit != 898 %}
+            <a class="btn btn-info btn-lg" href="{% url 'accueil' offset|add:"32" limit|add:"32" %}"> Suivant </a>
+        {% endif %}
     </div>
 
 </div>
