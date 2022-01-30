@@ -15,7 +15,25 @@ team = []
 
 def index(request, nb):
     url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
+
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
+
+    def getSpriteUrl(id):
+        UrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(id)
+        ResponsePokemon = requests.get(UrlPokemon).text
+        Parse_pokemon = json.loads(ResponsePokemon)
+        SpriteUrl = Parse_pokemon["sprites"]["front_default"]
+        return SpriteUrl
+
+    if(nb != 1):
+        prevSpriteUrl = getSpriteUrl(nb-1)
+    else:
+        prevSpriteUrl = None
+
+    if(nb != 898):
+        nextSpriteUrl = getSpriteUrl(nb+1)
+    else:
+        nextSpriteUrl = None
 
     responsePokemon = requests.get(urlPokemon).text
     parse_pokemon = json.loads(responsePokemon)
@@ -54,9 +72,11 @@ def index(request, nb):
         typeFrench = parse_type["names"][3]["name"]
         types.append(typeFrench)
         colors.append(colorType(typeFrench))
-
-    return render(request, 'pokedex/index.html',{'name': name, 'sprite': spriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,'types': types, 'color': colors, 'nb': id})
-
+        
+    return render(request, 'pokedex/index.html',
+                  {'name': name, 'sprite': spriteUrl, 'prev_sprite': prevSpriteUrl, 'next_sprite': nextSpriteUrl, 'poids': poids, 'taille': taille, 'habitat': habitatFrench,
+                   'types': types, 'color': colors, 'nb': id})
+  
 
 async def pageAccueil(request, offset=0, limit=32):
     urlAllPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=" + str(offset) + "&limit=" + str(limit)
