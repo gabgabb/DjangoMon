@@ -8,11 +8,11 @@ Ce projet à pour but de développer un pokédex à partir de l'API https://poke
 
 Contenu du projet : 
 
--   Affichage de l'intégralité des Pokemon
+-   Affichage de l'intégralité des Pokemons
 -   Accéder aux caractéristiques du Pokemon 
 -   Possibilité de rechercher un Pokemon en particulier (en Français)
 -   Navigation d'un Pokemon à un autre
--   Former sa propre équipe de 5 pokemon
+-   Former sa propre équipe de 5 Pokemons
 
 # Installations
 
