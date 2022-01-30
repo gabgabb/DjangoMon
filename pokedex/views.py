@@ -9,7 +9,6 @@ import unicodedata
 
 from django.shortcuts import render, redirect
 from .forms import PokemonForm
-from .models import Team
 
 team = []
 
@@ -166,8 +165,8 @@ async def src_pokemon(request):
             return redirect('index', str(random.randint(1, 899)))
             return redirect('index', str(random.randint(1, 898)))
 
-#Appel de cette fonction pour ajouter le pokemon selectionné de son équipe
-#Maximum 5 Pokemon dans son équipe
+#Appel de cette fonction pour ajouter le pokemon selectionné dans son équipe
+#Maximum 5 pokemons dans une équipe
 
 def addPokemon(request, nb):
     length = len(team)
@@ -181,7 +180,7 @@ def delPokemon(request,nb):
     del team[nb]
     return redirect('team_pokemon')
 
-#Fonction qui permet d'afficher les pokemon attrapés dans son équipe
+#Fonction qui permet d'afficher les pokemons attrapés dans son équipe
 
 def team_pokemon(request):
     tabTeam = []
