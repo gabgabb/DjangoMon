@@ -166,15 +166,22 @@ async def src_pokemon(request):
             return redirect('index', str(random.randint(1, 899)))
             return redirect('index', str(random.randint(1, 898)))
 
+#Appel de cette fonction pour ajouter le pokemon selectionné de son équipe
+#Maximum 5 Pokemon dans son équipe
+
 def addPokemon(request, nb):
     length = len(team)
     if length <= 4:
         team.append(nb)
     return redirect('team_pokemon')
   
+#Appel de cette fonction pour supprimer le pokemon selectionné de son équipe
+
 def delPokemon(request,nb):
     del team[nb]
     return redirect('team_pokemon')
+
+#Fonction qui permet d'afficher les pokemon attrapés dans son équipe
 
 def team_pokemon(request):
     tabTeam = []
