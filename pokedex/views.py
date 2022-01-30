@@ -13,10 +13,8 @@ from .forms import PokemonForm
 team = []
 
 def index(request, nb):
-    url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
 
-    urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
-
+    #Cette fonction récupère les miniatures des pokemons
     def getSpriteUrl(id):
         UrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(id)
         ResponsePokemon = requests.get(UrlPokemon).text
@@ -34,6 +32,8 @@ def index(request, nb):
     else:
         nextSpriteUrl = None
 
+    url = "https://pokeapi.co/api/v2/pokemon-species/" + str(nb)
+    urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
     responsePokemon = requests.get(urlPokemon).text
     parse_pokemon = json.loads(responsePokemon)
     spriteUrl = parse_pokemon["sprites"]["other"]["official-artwork"]["front_default"]
