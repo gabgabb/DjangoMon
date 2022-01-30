@@ -95,6 +95,7 @@
 	height: 65px;
     border-style: hidden;
     float: right;
+    border-radius: 35px;
 }
 
 .boutonPokeball{
@@ -104,9 +105,6 @@
 h4 {
     margin-top: 5%;
 }
-
-
-
 
 .pokeball{
     width: 50px;

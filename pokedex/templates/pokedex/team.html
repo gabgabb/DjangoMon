@@ -13,15 +13,22 @@
 </header>         
 <body>
     <div class="container">
-        <h2 class="poketeam">Ma Poketeam</h2>
+            {% if team|length == 0  %}
+                <div id="errorPage">
+                    <h4 >Il n'y a pas encore de Poekmon dans votre équipe, commencer à en ajouter en cliquant sur la Pokeball pour l'attraper et le mettre dans votre équipe !</h3>
+                    <img id="imgError" src="{% static 'ressources/poketriste.png' %}">
+                </div>
+            {%else%}
+                <h2 class="poketeam">Ma Poketeam de {{team|length}} Pokemon (5 maximum)</h2>
+            {%endif%}
             {% for t in team %}
-            <div id="cardTeamPokemon">
-                <a id="lienPokemon" href="{% url 'index' t.id %}">
-                    <p class="infoPokemon">N°{{t.id}} {{ t.name }}</p>
-                    <img id="imgTeam" src="{{ t.sprite }}">
-                </a>
-                <button id="btnDelTeam" type="submit" onclick="location.href='{% url "del_pokemon" forloop.counter0|tabIndex %}'"> <img src="{% static 'ressources/pokeballOuverte.png' %}" height ="60" width="60"/></button>
-            </div>
+                <div id="cardTeamPokemon">
+                    <a id="lienPokemon" href="{% url 'index' t.id %}">
+                        <p class="infoPokemon">N°{{t.id}} {{ t.name }}</p>
+                        <img id="imgTeam" src="{{ t.sprite }}">
+                    </a>
+                    <button id="btnDelTeam" type="submit" onclick="location.href='{% url "del_pokemon" forloop.counter0|tabIndex %}'"> <img src="{% static 'ressources/pokeballOuverte.png' %}" height ="60" width="60"/></button>
+                </div>
             {% endfor %}
     </div>
 </body>
