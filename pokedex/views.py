@@ -16,19 +16,20 @@ def index(request, nb):
 
     urlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb)
 
+    def getSpriteUrl(id):
+        UrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(id)
+        ResponsePokemon = requests.get(UrlPokemon).text
+        Parse_pokemon = json.loads(ResponsePokemon)
+        SpriteUrl = Parse_pokemon["sprites"]["front_default"]
+        return SpriteUrl
+
     if(nb != 1):
-        prevUrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb-1)
-        prevResponsePokemon = requests.get(prevUrlPokemon).text
-        prevParse_pokemon = json.loads(prevResponsePokemon)
-        prevSpriteUrl = prevParse_pokemon["sprites"]["front_default"]
+        prevSpriteUrl = getSpriteUrl(nb-1)
     else:
         prevSpriteUrl = None
 
     if(nb != 898):
-        nextUrlPokemon = "https://pokeapi.co/api/v2/pokemon/" + str(nb+1)
-        nextResponsePokemon = requests.get(nextUrlPokemon).text
-        nextParse_pokemon = json.loads(nextResponsePokemon)
-        nextSpriteUrl = nextParse_pokemon["sprites"]["front_default"]
+        nextSpriteUrl = getSpriteUrl(nb+1)
     else:
         nextSpriteUrl = None
 
