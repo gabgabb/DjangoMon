@@ -1,13 +1,42 @@
 # DjangoMon
 
-# installer toutes les dépendances
-pip install -r requiements.txt
+# Introduction
 
-# run server
-py manage.py runserver
+Realisation d'un Pokédex en Python / Django
 
-# créer la migration
-py manage.py makemigrations
+Ce projet à pour but de développer un pokédex à partir de l'API https://pokeapi.co/
 
-# migrer vers sa base
-py manage.py migrate
+Contenu du projet : 
+
+-   Affichage de l'intégralité des Pokemon
+-   Accéder aux caractéristiques du Pokemon 
+-   Possibilité de rechercher un Pokemon en particulier (en Français)
+-   Navigation d'un Pokemon à un autre
+-   Former sa propre équipe de 5 pokemon
+
+# Installations
+
+Dans un premier temps, clonez le git pour récupérer l'intégralité du projet
+
+Le framework Django a été utilisé pour l'affichage graphique
+
+Pour l'installer, executez la commande :
+
+-   pip install Django
+
+Pour installer la bibliothèque aiohttp pour l'asynchrone, exécutez la commande :
+
+-   pip install aiohttp
+
+# Lancer le projet
+
+Afin d'avoir accès à l'application sur votre machine, exécutez la commande :
+
+-   py manage.py runserver
+
+# Developpeurs
+
+Gabriel Filiot
+Yohann Durel
+Antoine Deyris
+Romain Martineau

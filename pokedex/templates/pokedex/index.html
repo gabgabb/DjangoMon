@@ -5,7 +5,7 @@
     <title>{{ name }}</title>
     {% include "pokedex/header.html" %}
     {% load extra_temp %}
-
+    {% load static %}
 </head>
 
 <body id="pokemon">
@@ -33,7 +33,9 @@
         </div>
         <p class="infoPokemon" ><br> {{ taille }}m | {{ poids }}kg</p>
         <p class="infoPokemon">Habitat : {{ habitat|upperCase }}</p>
-        <button id="btnAddTeam" class="btn btn-outline-danger" type="submit"> + Ajouter à la Team</button>
+        <div class="boutonPokeball">
+                <button id="btnAddTeam" type="submit" onclick="location.href='{% url "add_pokemon" nb %}'"> <img src="{% static 'ressources/pokeball.png' %}" height ="60" width="60"/></button>  
+        </div> 
     </div>
-    </body>
+</body>
 </html>

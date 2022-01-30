@@ -43,16 +43,18 @@
     text-align: center;
 }
 
-#pokemon {
-    display: flex;
+#pokemon, #errorPage {
+    display: inherit;
     justify-items: center;
     flex-direction: column;
     text-align: center;
 }
 
-#imgPokemon {
-    display: flex;
+#imgPokemon, #imgError {
+    display: initial;
     justify-content: center;
+    width: 300px;
+    height: 300px;
 }
 
 #typePokemon {
@@ -70,9 +72,9 @@
 }
 
 .infoPokemon {
-    font-size: 20px;
+    font-size: 25px;
+    text-align: center;
 }
-
 
 .btn-info {
     margin: 1% 1% 1% 1%;
@@ -82,7 +84,26 @@
 
 #btnAddTeam{
     margin: auto;
-    margin-top: 1%;
+    width: 65px;
+	height: 65px;
+    border-style: hidden;
+}
+
+#btnDelTeam{
+    margin: auto;
+    width: 65px;
+	height: 65px;
+    border-style: hidden;
+    float: right;
+    border-radius: 35px;
+}
+
+.boutonPokeball{
+    display: inline-block;
+}
+
+h4 {
+    margin-top: 5%;
 }
 
 .pokeball{
@@ -93,8 +114,18 @@
 
 #cardTeamPokemon {
     display: inline-block;
-    margin: 2% 0 0 2%;
-    width: 33%;
+    margin: 5px;
+    width: 30%;
     background: #d7d6d6;
     border-radius: 20px;
+}
+
+.poketeam{
+    text-align: center;
+}
+
+#imgTeam {
+    display: block;
+    margin: auto;
+    width: 40%;
 }

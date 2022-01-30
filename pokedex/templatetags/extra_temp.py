@@ -7,6 +7,9 @@ register = template.Library()
 def tabElement(l, i):
     return l[i]
 
+@register.filter
+def tabIndex(i):
+    return i
 
 @register.filter
 def upperCase(s):

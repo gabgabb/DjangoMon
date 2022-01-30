@@ -3,49 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Accueil</title>
-
     {% include "pokedex/header.html" %}
+    {% load static %}
+    {% load extra_temp %}
 </head>
 
 <header>
 
-</header>
+</header>         
 <body>
     <div class="container">
-        <h2>Ma Poketeam</h2>
-        <h4>Liste des 6 pokemon :</h4>
-        <ul>
-            <div id="cardTeamPokemon">
-                <p id="infoPokemon">
-                    Pokemon 1 : N°1
-                </p>
-            </div>
-            <div id="cardTeamPokemon">
-                <p id="infoPokemon">
-                    Pokemon 2 : N°2
-                </p>
-            </div>
-            <div id="cardTeamPokemon">
-                <p id="infoPokemon">
-                    Pokemon 3 : N°3
-                </p>
-            </div>
-            <div id="cardTeamPokemon">
-                <p id="infoPokemon">
-                    Pokemon 4 : N°5
-                </p>
-            </div>
-            <div id="cardTeamPokemon">
-                <p id="infoPokemon">
-                    Pokemon 5 : N°5
-                </p>
-            </div>
-            <div id="cardTeamPokemon">
-                <p id="infoPokemon">
-                    Pokemon 6 : N°6
-                </p>
-            </div>
-        </ul>
+            {% if team|length == 0  %}
+                <div id="errorPage">
+                    <h4 >Il n'y a pas encore de Poekmon dans votre équipe, commencer à en ajouter en cliquant sur la Pokeball pour l'attraper et le mettre dans votre équipe !</h3>
+                    <img id="imgError" src="{% static 'ressources/poketriste.png' %}">
+                </div>
+            {%else%}
+                <h2 class="poketeam">Ma Poketeam de {{team|length}} Pokemon (5 maximum)</h2>
+            {%endif%}
+            {% for t in team %}
+                <div id="cardTeamPokemon">
+                    <a id="lienPokemon" href="{% url 'index' t.id %}">
+                        <p class="infoPokemon">N°{{t.id}} {{ t.name }}</p>
+                        <img id="imgTeam" src="{{ t.sprite }}">
+                    </a>
+                    <button id="btnDelTeam" type="submit" onclick="location.href='{% url "del_pokemon" forloop.counter0|tabIndex %}'"> <img src="{% static 'ressources/pokeballOuverte.png' %}" height ="60" width="60"/></button>
+                </div>
+            {% endfor %}
     </div>
 </body>
 </html>
