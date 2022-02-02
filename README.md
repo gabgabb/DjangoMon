@@ -14,7 +14,7 @@ Contenu du projet :
 -   Navigation d'un Pokemon à un autre
 -   Former sa propre équipe de 5 Pokemons
 
-# Installations
+# Installation
 
 Dans un premier temps, clonez le git pour récupérer l'intégralité du projet
 
@@ -34,9 +34,11 @@ Afin d'avoir accès à l'application sur votre machine, exécutez la commande :
 
 -   py manage.py runserver
 
-# Developpeurs
+Allez à l'addresse http://localhost:8000/pokedex/accueil/
 
-Gabriel Filiot
-Yohann Durel
-Antoine Deyris
-Romain Martineau
+# Développeurs
+
+- Gabriel Filiot
+- Yohann Durel
+- Antoine Deyris
+- Romain Martineau
